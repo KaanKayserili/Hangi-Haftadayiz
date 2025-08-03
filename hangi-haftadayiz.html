@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Yılın Kaçıncı Haftası</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .title {
+      font-size: 1.3em;
+      color: #4a4a4a;
+      margin-bottom: 16px;
+    }
+
+    .week-number {
+      font-size: 3em;
+      font-weight: bold;
+      color: #007acc;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="title">Bugün yılın</div>
+    <div class="week-number" id="haftaNumarasi">--</div>
+    <div class="title">haftasındayız</div>
+  </div>
+
+  <script>
+    function getISOWeekNumber(date) {
+      const target = new Date(date.valueOf());
+      const dayNumber = (date.getDay() + 6) % 7; // Pazartesi = 0
+      target.setDate(target.getDate() - dayNumber + 3);
+      const firstThursday = new Date(target.getFullYear(), 0, 4);
+      const weekNumber = 1 + Math.round(((target - firstThursday) / 86400000 - 3 + ((firstThursday.getDay() + 6) % 7)) / 7);
+      return weekNumber;
+    }
+
+    const today = new Date();
+    const weekNumber = getISOWeekNumber(today);
+    document.getElementById("haftaNumarasi").innerText = `${weekNumber}.`;
+  </script>
+</body>
+</html>
